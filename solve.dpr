@@ -57,7 +57,6 @@ begin
 
   if row = 8 then
   begin
-  
     PrintSolution(board);
     solutionCount := solutionCount + 1;
   end
@@ -145,10 +144,8 @@ begin
   
     if arr[j] <= pivot then
     begin
-    
       i := i + 1;
       
-    
       temp := arr[i];
       arr[i] := arr[j];
       arr[j] := temp;
@@ -184,7 +181,6 @@ end;
 
 procedure QuickSort(var arr: array of Integer);
 begin
-
   QuickSortRecursive(arr, 0, Length(arr) - 1);
 end;
 
