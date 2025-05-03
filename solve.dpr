@@ -17,16 +17,16 @@ var
   safe: Boolean;
 begin
   safe := True;
-  for i := 0 to row - 1 do
+  i := 0;
+  while (i < row) and safe do
   begin
-  
-    if (board[i] = col) or 
-       (board[i] - i = col - row) or 
+    if (board[i] = col) or
+       (board[i] - i = col - row) or
        (board[i] + i = col + row) then
     begin
       safe := False;
-      break;
     end;
+    i := i + 1;
   end;
   IsSafe := safe;
 end;
@@ -117,17 +117,16 @@ begin
   if (k < 0) or (k > n) then
   begin
     BinomialCoefficient := 0;
-    Exit;
-  end;
-  
-
-  SetLength(memo, n + 1, k + 1);
-  for i := 0 to n do
-    for j := 0 to Min(i, k) do
-      memo[i, j] := -1;
-  
-
-  BinomialCoefficient := BinomialRecursive(n, k, memo);
+  end
+  else
+  begin
+      SetLength(memo, n + 1, k + 1);
+      for i := 0 to n do
+        for j := 0 to Min(i, k) do
+          memo[i, j] := -1;
+      
+      BinomialCoefficient := BinomialRecursive(n, k, memo);
+    end;
 end;
 
 { Быстрая сортировка }
@@ -211,22 +210,22 @@ begin
     Write(Prompt);
     ReadLn(s);
     
-  
-    if s = '' then
+    if s <> '' then
     begin
-      WriteLn('Ошибка: Пустой ввод. Пожалуйста, введите число.');
-      Continue;
-    end;
-    
-  
-    Val(s, value, code);
-    
-    if code <> 0 then
-      WriteLn('Ошибка: Введите корректное целое число.')
-    else if (value < MinValue) or (value > MaxValue) then
-      WriteLn('Ошибка: Число должно быть в диапазоне от ', MinValue, ' до ', MaxValue, '.')
+      Val(s, value, code);
+      
+      if code = 0 then
+      begin
+        if (value >= MinValue) and (value <= MaxValue) then
+          validInput := True
+        else
+          WriteLn('Ошибка: Число должно быть в диапазоне от ', MinValue, ' до ', MaxValue, '.');
+      end
+      else
+        WriteLn('Ошибка: Введите корректное целое число.');
+    end
     else
-      validInput := True;
+      WriteLn('Ошибка: Пустой ввод. Пожалуйста, введите число.');
       
   until validInput;
   
@@ -281,9 +280,9 @@ begin
            for i := 0 to n - 1 do
              Write(arr[i], ' ');
            WriteLn;
-           
+
            QuickSort(arr);
-           
+
            WriteLn('Отсортированный массив:');
            for i := 0 to n - 1 do
              Write(arr[i], ' ');
